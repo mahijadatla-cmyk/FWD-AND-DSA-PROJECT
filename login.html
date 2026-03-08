@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<style>
+body{
+font-family:Segoe UI;
+background:linear-gradient(135deg,#4facfe,#00f2fe,#764ba2);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.container{
+background:white;
+padding:30px;
+width:320px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+text-align:center;
+}
+
+input{
+width:90%;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+width:95%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#ff7e5f;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Login</h2>
+
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="register()">Register</button>
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+function register(){
+
+let user=document.getElementById("username").value
+let pass=document.getElementById("password").value
+
+localStorage.setItem(user,pass)
+
+document.getElementById("msg").innerText="Registration successful"
+
+}
+
+function login(){
+
+let user=document.getElementById("username").value
+let pass=document.getElementById("password").value
+
+let stored=localStorage.getItem(user)
+
+if(stored===pass){
+
+localStorage.setItem("loggedUser",user)
+
+window.location.href="product.html"
+
+}
+else{
+
+document.getElementById("msg").innerText="Please register first"
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

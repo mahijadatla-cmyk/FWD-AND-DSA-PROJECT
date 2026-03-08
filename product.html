@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Discover Our Premium Product Collection</title>
+
+<style>
+
+body{
+font-family:Segoe UI;
+text-align:center;
+background:linear-gradient(135deg,#4facfe,#00f2fe,#764ba2);
+color:white;
+margin:0;
+}
+
+h1{
+margin-top:40px;
+font-size:36px;
+}
+
+.container{
+width:420px;
+margin:auto;
+margin-top:30px;
+padding:25px;
+border-radius:15px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(12px);
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+label{
+display:block;
+text-align:left;
+margin-top:12px;
+font-weight:bold;
+}
+
+select,button{
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:8px;
+border:none;
+font-size:14px;
+}
+
+button{
+background:linear-gradient(90deg,#ff7e5f,#feb47b);
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+table{
+margin:auto;
+margin-top:40px;
+border-collapse:collapse;
+width:65%;
+background:white;
+color:black;
+border-radius:10px;
+overflow:hidden;
+}
+
+th{
+background:#333;
+color:white;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.lowest{
+color:#2ecc71;
+font-weight:bold;
+font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Discover Our Premium Product Collection</h1>
+
+<div class="container">
+
+<label>Product</label>
+<select id="product" onchange="updateBrands()">
+<option value="shoes">Shoes</option>
+<option value="watch">Smart Watch</option>
+<option value="headphones">Headphones</option>
+<option value="laptop">Laptop</option>
+<option value="phone">Smartphone</option>
+</select>
+
+<label>Brand</label>
+<select id="brand" onchange="updateModels()"></select>
+
+<label>Model</label>
+<select id="model"></select>
+
+<label>Color</label>
+<select id="color">
+<option>Black</option>
+<option>White</option>
+<option>Red</option>
+<option>Blue</option>
+<option>Silver</option>
+<option>Gold</option>
+</select>
+
+<label>Size</label>
+<select id="size">
+<option>6</option>
+<option>7</option>
+<option>8</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+</select>
+
+<button onclick="compare()">Compare Prices</button>
+
+</div>
+
+<div id="result"></div>
+
+<script>
+
+const data={
+
+shoes:{
+Nike:["Air Max","Revolution","Pegasus","Air Force 1"],
+Adidas:["Ultraboost","Superstar","NMD","Gazelle"],
+Puma:["RS-X","Future Rider","Suede","Velocity Nitro"],
+Reebok:["Classic Leather","Nano X","Zig Kinetica"]
+},
+
+watch:{
+Apple:["Series 8","Series 9","Ultra","SE"],
+Samsung:["Galaxy Watch 5","Galaxy Watch 6","Galaxy Watch Active"],
+Noise:["ColorFit Pro","Noise Pulse","Noise Evolve"],
+Fossil:["Gen 5","Gen 6","Hybrid HR"]
+},
+
+headphones:{
+Sony:["WH-1000XM5","WH-XB910","WF-1000XM4"],
+JBL:["Tune 760NC","Live 660","Quantum 800"],
+Boat:["Rockerz 550","Rockerz 650","Nirvana 751"],
+Sennheiser:["HD 450BT","Momentum 4"]
+},
+
+laptop:{
+Dell:["Inspiron","XPS","G15 Gaming"],
+HP:["Pavilion","Victus","Omen"],
+Lenovo:["IdeaPad","ThinkPad","Legion"],
+Asus:["ROG Zephyrus","TUF Gaming","ZenBook"],
+Acer:["Aspire 5","Predator Helios"]
+},
+
+phone:{
+Apple:["iPhone 13","iPhone 14","iPhone 15","iPhone 15 Pro"],
+Samsung:["Galaxy S22","Galaxy S23","Galaxy Z Fold"],
+OnePlus:["OnePlus 11","OnePlus Nord","OnePlus 12"],
+Xiaomi:["Mi 11","Redmi Note 12","Xiaomi 13"],
+Google:["Pixel 7","Pixel 8"]
+}
+
+}
+
+function updateBrands(){
+
+let product=document.getElementById("product").value
+let brandSelect=document.getElementById("brand")
+
+brandSelect.innerHTML=""
+
+for(let brand in data[product]){
+
+let option=document.createElement("option")
+option.text=brand
+brandSelect.add(option)
+
+}
+
+updateModels()
+
+}
+
+function updateModels(){
+
+let product=document.getElementById("product").value
+let brand=document.getElementById("brand").value
+let modelSelect=document.getElementById("model")
+
+modelSelect.innerHTML=""
+
+data[product][brand].forEach(model=>{
+
+let option=document.createElement("option")
+option.text=model
+modelSelect.add(option)
+
+})
+
+}
+
+updateBrands()
+
+function compare(){
+
+const prices=[
+{site:"Amazon",price:8200},
+{site:"Flipkart",price:8000},
+{site:"Myntra",price:8400},
+{site:"Ajio",price:8100},
+{site:"Reliance Digital",price:8300}
+]
+
+let lowest=Math.min(...prices.map(p=>p.price))
+
+let table="<table><tr><th>Website</th><th>Price</th></tr>"
+
+prices.forEach(p=>{
+
+let cls=p.price===lowest?"lowest":""
+
+table+=`
+<tr>
+<td>${p.site}</td>
+<td class="${cls}">₹${p.price}</td>
+</tr>`
+
+})
+
+table+="</table>"
+
+document.getElementById("result").innerHTML=table
+
+}
+
+</script>
+
+</body>
+
+</html>
